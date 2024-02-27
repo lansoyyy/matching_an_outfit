@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:matching_an_outfit/screens/tabs/home_tab.dart';
 import 'package:matching_an_outfit/utlis/colors.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -18,12 +19,15 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   final List<Widget> children = [
-    for (int i = 0; i < 3; i++) const SizedBox(),
+    const SizedBox(),
+    const HomeTab(),
+    const SizedBox(),
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: background,
+      body: children[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         selectedLabelStyle: const TextStyle(fontFamily: 'Bold'),
         unselectedLabelStyle: const TextStyle(fontFamily: 'Bold'),
