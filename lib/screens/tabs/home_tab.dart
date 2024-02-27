@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:matching_an_outfit/screens/pages/body_selection_page.dart';
 import 'package:matching_an_outfit/utlis/colors.dart';
 import 'package:matching_an_outfit/widgets/button_widget.dart';
 
@@ -50,14 +51,24 @@ class HomeTab extends StatelessWidget {
               radius: 100,
               width: 150,
               label: 'Male',
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => BodySelectionPage(
+                          type: 'Male',
+                        )));
+              },
             ),
             ButtonWidget(
               color: primary,
               radius: 100,
               width: 150,
               label: 'Female',
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => BodySelectionPage(
+                          type: 'Female',
+                        )));
+              },
             ),
           ],
         ),
