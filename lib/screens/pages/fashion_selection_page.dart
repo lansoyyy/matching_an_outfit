@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:matching_an_outfit/screens/pages/fashion_selection_page.dart';
 import 'package:matching_an_outfit/utlis/colors.dart';
+import 'package:matching_an_outfit/widgets/button_widget.dart';
 import 'package:matching_an_outfit/widgets/text_widget.dart';
 
-class SkintoneSelectionPage extends StatefulWidget {
-  const SkintoneSelectionPage({super.key});
+class FashionSelectionPage extends StatefulWidget {
+  const FashionSelectionPage({super.key});
 
   @override
-  State<SkintoneSelectionPage> createState() => _SkintoneSelectionPageState();
+  State<FashionSelectionPage> createState() => _FashionSelectionPageState();
 }
 
-class _SkintoneSelectionPageState extends State<SkintoneSelectionPage> {
-  List colors = [
-    Colors.brown[100],
-    Colors.brown[200],
-    Colors.brown[300],
-    Colors.brown[400],
-    Colors.brown[500],
-    Colors.brown[600],
+class _FashionSelectionPageState extends State<FashionSelectionPage> {
+  List types = [
+    'Casual',
+    'Classic',
+    'Streetwear',
+    'Retro',
+    'Sporty',
+    'Minimalist',
   ];
   @override
   Widget build(BuildContext context) {
@@ -46,14 +46,14 @@ class _SkintoneSelectionPageState extends State<SkintoneSelectionPage> {
             Center(
               child: Container(
                 height: 45,
-                width: 250,
+                width: 300,
                 decoration: BoxDecoration(
                   border: Border.all(color: primary),
                   borderRadius: BorderRadius.circular(100),
                 ),
                 child: Center(
                   child: TextWidget(
-                    text: 'Select your Skintone',
+                    text: 'Select your type of Fashion',
                     fontSize: 18,
                     color: primary,
                     fontFamily: 'Bold',
@@ -66,17 +66,15 @@ class _SkintoneSelectionPageState extends State<SkintoneSelectionPage> {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: colors.length,
+                itemCount: types.length,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                    child: ListTile(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) =>
-                                const FashionSelectionPage()));
-                      },
-                      tileColor: colors[index],
+                    child: ButtonWidget(
+                      radius: 100,
+                      color: primary,
+                      label: types[index],
+                      onPressed: () {},
                     ),
                   );
                 },
