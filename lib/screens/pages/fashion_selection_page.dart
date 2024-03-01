@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:matching_an_outfit/screens/pages/result_screen.dart';
 import 'package:matching_an_outfit/utlis/colors.dart';
 import 'package:matching_an_outfit/widgets/button_widget.dart';
 import 'package:matching_an_outfit/widgets/text_widget.dart';
@@ -74,7 +75,10 @@ class _FashionSelectionPageState extends State<FashionSelectionPage> {
                       radius: 100,
                       color: primary,
                       label: types[index],
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const ResultPage()));
+                      },
                     ),
                   );
                 },
