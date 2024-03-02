@@ -1,8 +1,13 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:matching_an_outfit/screens/pages/result_screen.dart';
 import 'package:matching_an_outfit/utlis/colors.dart';
 import 'package:matching_an_outfit/widgets/button_widget.dart';
 import 'package:matching_an_outfit/widgets/text_widget.dart';
+import 'package:path/path.dart' as path;
 
 class FashionSelectionPage extends StatefulWidget {
   const FashionSelectionPage({super.key});
@@ -20,6 +25,77 @@ class _FashionSelectionPageState extends State<FashionSelectionPage> {
     'Sporty',
     'Minimalist',
   ];
+
+  late String fileName = '';
+
+  late File imageFile;
+
+  late String imageURL = '';
+
+  Future<void> uploadPicture(String inputSource) async {
+    final picker = ImagePicker();
+    XFile pickedImage;
+
+    pickedImage = (await picker.pickImage(
+        source:
+            inputSource == 'camera' ? ImageSource.camera : ImageSource.gallery,
+        maxWidth: 1920))!;
+
+    fileName = path.basename(pickedImage.path);
+    imageFile = File(pickedImage.path);
+
+    try {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => const Padding(
+          padding: EdgeInsets.only(left: 30, right: 30),
+          child: AlertDialog(
+              title: Row(
+            children: [
+              CircularProgressIndicator(
+                color: Colors.black,
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              Text(
+                'Loading . . .',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'QRegular'),
+              ),
+            ],
+          )),
+        ),
+      );
+
+      // await firebase_storage.FirebaseStorage.instance
+      //     .ref('Users/$fileName')
+      //     .putFile(imageFile);
+      // imageURL = await firebase_storage.FirebaseStorage.instance
+      //     .ref('Users/$fileName')
+      //     .getDownloadURL();
+
+      // await FirebaseFirestore.instance
+      //     .collection('Users')
+      //     .doc(FirebaseAuth.instance.currentUser!.uid)
+      //     .update({'profilePicture': imageURL});
+
+      Navigator.of(context).pop();
+
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => ResultPage(
+                image: imageFile.path,
+              )));
+    } catch (err) {
+      if (kDebugMode) {
+        print(err);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,8 +152,7 @@ class _FashionSelectionPageState extends State<FashionSelectionPage> {
                       color: primary,
                       label: types[index],
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const ResultPage()));
+                        uploadPicture('camera');
                       },
                     ),
                   );

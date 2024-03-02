@@ -1,8 +1,15 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:matching_an_outfit/utlis/colors.dart';
 
 class ResultPage extends StatefulWidget {
-  const ResultPage({super.key});
+  String image;
+
+  ResultPage({
+    super.key,
+    required this.image,
+  });
 
   @override
   State<ResultPage> createState() => _ResultPageState();
@@ -44,6 +51,13 @@ class _ResultPageState extends State<ResultPage> {
                   Icons.arrow_back,
                   color: primary,
                 ),
+              ),
+            ),
+            Expanded(
+              child: Image.file(
+                File(widget.image),
+                height: 500,
+                width: 500,
               ),
             ),
             const SizedBox(
