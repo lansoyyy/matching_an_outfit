@@ -54,10 +54,33 @@ class _ResultPageState extends State<ResultPage> {
               ),
             ),
             Expanded(
-              child: Image.file(
-                File(widget.image),
-                height: 500,
-                width: 500,
+              child: Stack(
+                children: [
+                  Image.file(
+                    File(widget.image),
+                    height: 500,
+                    width: 500,
+                  ),
+                  Column(
+                    children: [
+                      const SizedBox(
+                        height: 110,
+                      ),
+                      Center(
+                        child: Image.asset(
+                          'assets/images/5-removebg-preview.png',
+                          height: 150,
+                        ),
+                      ),
+                      Center(
+                        child: Image.asset(
+                          'assets/images/2-removebg-preview-removebg-preview.png',
+                          height: 175,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
             const SizedBox(
