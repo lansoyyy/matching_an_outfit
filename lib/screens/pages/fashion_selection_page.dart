@@ -19,7 +19,6 @@ class FashionSelectionPage extends StatefulWidget {
 class _FashionSelectionPageState extends State<FashionSelectionPage> {
   List types = [
     'Casual',
-    'Classic',
     'Streetwear',
     'Sporty',
     'Minimalist',
