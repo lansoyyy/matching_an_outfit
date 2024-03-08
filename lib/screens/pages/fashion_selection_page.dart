@@ -21,7 +21,6 @@ class _FashionSelectionPageState extends State<FashionSelectionPage> {
     'Casual',
     'Classic',
     'Streetwear',
-    'Retro',
     'Sporty',
     'Minimalist',
   ];
