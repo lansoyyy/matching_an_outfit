@@ -1,31 +1,55 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:matching_an_outfit/utlis/colors.dart';
+import 'package:matching_an_outfit/utlis/data.dart';
 
 class ResultPage extends StatefulWidget {
   String image;
+  String type;
 
-  ResultPage({
-    super.key,
-    required this.image,
-  });
+  ResultPage({super.key, required this.image, required this.type});
 
   @override
   State<ResultPage> createState() => _ResultPageState();
 }
 
 class _ResultPageState extends State<ResultPage> {
-  List types = [
-    'Casual',
-    'Classic',
-    'Streetwear',
-    'Retro',
-    'Sporty',
-    'Minimalist',
-  ];
+  Random random = Random();
+
   @override
   Widget build(BuildContext context) {
+    int randomTop = random.nextInt(widget.type == 'Casual'
+        ? 6
+        : widget.type == 'Streetwear'
+            ? 5
+            : widget.type == 'Sporty'
+                ? 4
+                : 6);
+    int randomBottom = random.nextInt(widget.type == 'Casual'
+        ? 6
+        : widget.type == 'Streetwear'
+            ? 5
+            : widget.type == 'Sporty'
+                ? 6
+                : 6);
+
+    String top = widget.type == 'Casual'
+        ? casualTop[randomTop]
+        : widget.type == 'Streetwear'
+            ? streetTop[randomTop]
+            : widget.type == 'Sporty'
+                ? sportyTop[randomTop]
+                : minimalistTop[randomTop];
+
+    String bottom = widget.type == 'Casual'
+        ? casualBottom[randomBottom]
+        : widget.type == 'Streetwear'
+            ? streetBottom[randomBottom]
+            : widget.type == 'Sporty'
+                ? sportyBottom[randomBottom]
+                : minimalistBottom[randomBottom];
     return Scaffold(
       backgroundColor: background,
       floatingActionButton: FloatingActionButton(
@@ -34,7 +58,9 @@ class _ResultPageState extends State<ResultPage> {
           Icons.refresh,
           color: Colors.white,
         ),
-        onPressed: () {},
+        onPressed: () {
+          setState(() {});
+        },
       ),
       body: SafeArea(
         child: Column(
@@ -66,17 +92,27 @@ class _ResultPageState extends State<ResultPage> {
                       const SizedBox(
                         height: 110,
                       ),
-                      Center(
-                        child: Image.asset(
-                          'assets/images/5-removebg-preview.png',
-                          height: 150,
-                        ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 6),
+                        child: Center(
+                            child: Container(
+                          width: 118,
+                          height: 115,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(top), fit: BoxFit.fill)),
+                        )),
                       ),
-                      Center(
-                        child: Image.asset(
-                          'assets/images/2-removebg-preview-removebg-preview.png',
-                          height: 175,
-                        ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 5),
+                        child: Center(
+                            child: Container(
+                          width: 60,
+                          height: 120,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(bottom), fit: BoxFit.fill)),
+                        )),
                       ),
                     ],
                   ),

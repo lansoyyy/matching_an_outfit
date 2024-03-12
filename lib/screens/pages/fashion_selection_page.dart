@@ -24,6 +24,8 @@ class _FashionSelectionPageState extends State<FashionSelectionPage> {
     'Minimalist',
   ];
 
+  String type = 'Casual';
+
   late String fileName = '';
 
   late File imageFile;
@@ -85,6 +87,7 @@ class _FashionSelectionPageState extends State<FashionSelectionPage> {
 
       Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => ResultPage(
+                type: type,
                 image: imageFile.path,
               )));
     } catch (err) {
@@ -150,7 +153,51 @@ class _FashionSelectionPageState extends State<FashionSelectionPage> {
                       color: primary,
                       label: types[index],
                       onPressed: () {
-                        uploadPicture('camera');
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (context) {
+                            return SizedBox(
+                                height: 125,
+                                child: Column(
+                                  children: [
+                                    ListTile(
+                                      onTap: () {
+                                        setState(() {
+                                          type = types[index];
+                                        });
+                                        uploadPicture('gallery');
+                                      },
+                                      leading: const Icon(
+                                        Icons.image,
+                                      ),
+                                      title: TextWidget(
+                                        text: 'Choose from gallery',
+                                        fontSize: 14,
+                                      ),
+                                      trailing: const Icon(
+                                          Icons.keyboard_arrow_right_rounded),
+                                    ),
+                                    ListTile(
+                                      onTap: () {
+                                        setState(() {
+                                          type = types[index];
+                                        });
+                                        uploadPicture('camera');
+                                      },
+                                      leading: const Icon(
+                                        Icons.camera,
+                                      ),
+                                      title: TextWidget(
+                                        text: 'Take a picture',
+                                        fontSize: 14,
+                                      ),
+                                      trailing: const Icon(
+                                          Icons.keyboard_arrow_right_rounded),
+                                    ),
+                                  ],
+                                ));
+                          },
+                        );
                       },
                     ),
                   );
