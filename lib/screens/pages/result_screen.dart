@@ -21,19 +21,19 @@ class _ResultPageState extends State<ResultPage> {
   @override
   Widget build(BuildContext context) {
     int randomTop = random.nextInt(widget.type == 'Casual'
-        ? 6
+        ? 4
         : widget.type == 'Streetwear'
-            ? 5
+            ? 3
+            : widget.type == 'Sporty'
+                ? 2
+                : 4);
+    int randomBottom = random.nextInt(widget.type == 'Casual'
+        ? 4
+        : widget.type == 'Streetwear'
+            ? 3
             : widget.type == 'Sporty'
                 ? 4
-                : 6);
-    int randomBottom = random.nextInt(widget.type == 'Casual'
-        ? 6
-        : widget.type == 'Streetwear'
-            ? 5
-            : widget.type == 'Sporty'
-                ? 6
-                : 6);
+                : 4);
 
     String top = widget.type == 'Casual'
         ? casualTop[randomTop]
