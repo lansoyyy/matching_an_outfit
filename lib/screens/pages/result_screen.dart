@@ -4,6 +4,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:matching_an_outfit/utlis/colors.dart';
 import 'package:matching_an_outfit/utlis/data.dart';
+import 'package:matching_an_outfit/widgets/text_widget.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class ResultPage extends StatefulWidget {
   String image;
@@ -28,6 +30,10 @@ class _ResultPageState extends State<ResultPage> {
   String top = '';
 
   String bottom = '';
+
+  String toplink = '';
+
+  String bottomlink = '';
 
   @override
   Widget build(BuildContext context) {
@@ -91,18 +97,88 @@ class _ResultPageState extends State<ResultPage> {
               : widget.type == 'Sporty'
                   ? sportyBottom[randomBottom]
                   : minimalistBottom[randomBottom];
+
+      toplink = widget.type == 'Casual'
+          ? casualTopLink[randomTop]
+          : widget.type == 'Streetwear'
+              ? streetTopLink[randomTop]
+              : widget.type == 'Sporty'
+                  ? sportyTopLink[randomTop]
+                  : minimalistTopLink[randomTop];
+
+      bottomlink = widget.type == 'Casual'
+          ? casualBottomLink[randomBottom]
+          : widget.type == 'Streetwear'
+              ? streetBottomLink[randomBottom]
+              : widget.type == 'Sporty'
+                  ? sportyBottomLink[randomBottom]
+                  : minimalistBottomLink[randomBottom];
     }
     return Scaffold(
       backgroundColor: background,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: primary,
-        child: const Icon(
-          Icons.refresh,
-          color: Colors.white,
-        ),
-        onPressed: () {
-          setState(() {});
-        },
+      floatingActionButton: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          const SizedBox(
+            width: 50,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              FloatingActionButton(
+                backgroundColor: primary,
+                child: const Icon(
+                  Icons.link,
+                  color: Colors.white,
+                ),
+                onPressed: () async {
+                  await launchUrlString(toplink);
+                },
+              ),
+              TextWidget(
+                text: 'Top',
+                fontSize: 18,
+                fontFamily: 'Bold',
+              ),
+            ],
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              FloatingActionButton(
+                backgroundColor: primary,
+                child: const Icon(
+                  Icons.link,
+                  color: Colors.white,
+                ),
+                onPressed: () async {
+                  await launchUrlString(bottom);
+                },
+              ),
+              TextWidget(
+                text: 'Bottom',
+                fontSize: 18,
+                fontFamily: 'Bold',
+              ),
+            ],
+          ),
+          const Expanded(child: SizedBox()),
+          FloatingActionButton(
+            backgroundColor: primary,
+            child: const Icon(
+              Icons.refresh,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              setState(() {});
+            },
+          ),
+        ],
       ),
       body: SafeArea(
         child: Column(
@@ -150,7 +226,7 @@ class _ResultPageState extends State<ResultPage> {
                         child: Center(
                             child: Container(
                           width: 80,
-                          height: 115,
+                          height: 125,
                           decoration: BoxDecoration(
                               image: DecorationImage(
                                   image: AssetImage(bottom), fit: BoxFit.fill)),

@@ -42,6 +42,7 @@ dependencies:
   fluttertoast:
   get_storage:
   image_picker:
+  url_launcher:
 
 dev_dependencies:
   flutter_test:
