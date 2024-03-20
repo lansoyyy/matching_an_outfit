@@ -234,89 +234,46 @@ class _ResultPageState extends State<ResultPage> {
                       ),
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 25),
-                    child: SizedBox(
-                      height: 300,
-                      child: SingleChildScrollView(
-                        child: Builder(builder: (context) {
-                          return Column(
-                            children: [
-                              for (int i = 0; i < typeTop; i++)
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(top: 5, bottom: 5),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        hasSelected = true;
-                                        top = imgTop[i];
-                                      });
-                                    },
-                                    child: Container(
-                                      decoration: const BoxDecoration(
-                                        color: Colors.white,
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Image.asset(
-                                          imgTop[i],
-                                          width: 80,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                )
-                            ],
-                          );
-                        }),
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 25),
-                      child: SizedBox(
-                        height: 300,
-                        width: 350,
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Builder(builder: (context) {
-                            return Row(
-                              children: [
-                                for (int i = 0; i < typeBot; i++)
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 5, right: 5),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          hasSelected = true;
-                                          bottom = imgBot[i];
-                                        });
-                                      },
-                                      child: Container(
-                                        height: 100,
-                                        width: 100,
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            shape: BoxShape.circle,
-                                            image: DecorationImage(
-                                              image: AssetImage(
-                                                imgBot[i],
-                                              ),
-                                            )),
-                                      ),
-                                    ),
-                                  )
-                              ],
-                            );
-                          }),
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5, bottom: 5),
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Image.asset(
+                                top,
+                                width: 80,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 5, right: 5),
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            height: 100,
+                            width: 100,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                    bottom,
+                                  ),
+                                )),
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                 ],
               ),
