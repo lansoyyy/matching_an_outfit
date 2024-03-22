@@ -99,20 +99,20 @@ class _ResultPageState extends State<ResultPage> {
                   : minimalistBottom[randomBottom];
 
       toplink = widget.type == 'Casual'
-          ? casualTopLink[randomTop]
+          ? casualTopLink[randomTop + 1]
           : widget.type == 'Streetwear'
-              ? streetTopLink[randomTop]
+              ? streetTopLink[randomTop + 1]
               : widget.type == 'Sporty'
-                  ? sportyTopLink[randomTop]
-                  : minimalistTopLink[randomTop];
+                  ? sportyTopLink[randomTop + 1]
+                  : minimalistTopLink[randomTop + 1];
 
       bottomlink = widget.type == 'Casual'
-          ? casualBottomLink[randomBottom]
+          ? casualBottomLink[randomBottom + 1]
           : widget.type == 'Streetwear'
-              ? streetBottomLink[randomBottom]
+              ? streetBottomLink[randomBottom + 1]
               : widget.type == 'Sporty'
-                  ? sportyBottomLink[randomBottom]
-                  : minimalistBottomLink[randomBottom];
+                  ? sportyBottomLink[randomBottom + 1]
+                  : minimalistBottomLink[randomBottom + 1];
     }
     return Scaffold(
       backgroundColor: background,
@@ -157,7 +157,7 @@ class _ResultPageState extends State<ResultPage> {
                   color: Colors.white,
                 ),
                 onPressed: () async {
-                  await launchUrlString(bottom);
+                  await launchUrlString(bottomlink);
                 },
               ),
               TextWidget(
