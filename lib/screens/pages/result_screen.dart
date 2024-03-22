@@ -167,6 +167,30 @@ class _ResultPageState extends State<ResultPage> {
               ),
             ],
           ),
+          const SizedBox(
+            width: 15,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              FloatingActionButton(
+                backgroundColor: primary,
+                child: const Icon(
+                  Icons.save,
+                  color: Colors.white,
+                ),
+                onPressed: () async {
+                  await launchUrlString(bottomlink);
+                },
+              ),
+              TextWidget(
+                text: 'Save',
+                fontSize: 18,
+                fontFamily: 'Bold',
+              ),
+            ],
+          ),
           const Expanded(child: SizedBox()),
           FloatingActionButton(
             backgroundColor: primary,
