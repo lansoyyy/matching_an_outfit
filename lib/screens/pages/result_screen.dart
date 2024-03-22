@@ -1,10 +1,14 @@
 import 'dart:io';
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:matching_an_outfit/utlis/colors.dart';
 import 'package:matching_an_outfit/utlis/data.dart';
 import 'package:matching_an_outfit/widgets/text_widget.dart';
+import 'package:matching_an_outfit/widgets/toast_widget.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class ResultPage extends StatefulWidget {
@@ -34,6 +38,34 @@ class _ResultPageState extends State<ResultPage> {
   String toplink = '';
 
   String bottomlink = '';
+
+  ScreenshotController screenshotController = ScreenshotController();
+
+  double fontSize = 14;
+
+  void downloadImage() async {
+    try {
+      // Capture the widget as an image using the screenshotController
+      Uint8List? bytes = await screenshotController.capture();
+
+      if (bytes != null) {
+        // Save the image to the gallery or storage
+        final result = await ImageGallerySaver.saveImage(bytes);
+
+        if (result['isSuccess']) {
+          showToast("Image saved to gallery!");
+          print("Image saved to gallery!");
+        } else {
+          showToast("Failed to save image: ${result['errorMessage']}");
+          print("Failed to save image: ${result['errorMessage']}");
+        }
+      } else {
+        print("Failed to capture the widget as an image.");
+      }
+    } catch (e) {
+      print("Error saving image: $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -181,7 +213,7 @@ class _ResultPageState extends State<ResultPage> {
                   color: Colors.white,
                 ),
                 onPressed: () async {
-                  await launchUrlString(bottomlink);
+                  downloadImage();
                 },
               ),
               TextWidget(
@@ -222,84 +254,88 @@ class _ResultPageState extends State<ResultPage> {
               ),
             ),
             Expanded(
-              child: Stack(
-                children: [
-                  Image.file(
-                    File(widget.image),
-                    height: 500,
-                    width: 500,
-                  ),
-                  Column(
-                    children: [
-                      const SizedBox(
-                        height: 110,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 6),
-                        child: Center(
+              child: Screenshot(
+                controller: screenshotController,
+                child: Stack(
+                  children: [
+                    Image.file(
+                      File(widget.image),
+                      height: 500,
+                      width: 500,
+                    ),
+                    Column(
+                      children: [
+                        const SizedBox(
+                          height: 110,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 6),
+                          child: Center(
+                              child: Container(
+                            width: 110,
+                            height: 115,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage(top), fit: BoxFit.fill)),
+                          )),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5),
+                          child: Center(
+                              child: Container(
+                            width: 80,
+                            height: 125,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage(bottom),
+                                    fit: BoxFit.fill)),
+                          )),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5, bottom: 5),
+                          child: GestureDetector(
+                            onTap: () {},
                             child: Container(
-                          width: 110,
-                          height: 115,
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(top), fit: BoxFit.fill)),
-                        )),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 5),
-                        child: Center(
-                            child: Container(
-                          width: 80,
-                          height: 125,
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(bottom), fit: BoxFit.fill)),
-                        )),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5, bottom: 5),
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Image.asset(
-                                top,
-                                width: 80,
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Image.asset(
+                                  top,
+                                  width: 80,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 5, right: 5),
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: Container(
-                            height: 100,
-                            width: 100,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                    bottom,
-                                  ),
-                                )),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5, right: 5),
+                          child: GestureDetector(
+                            onTap: () {},
+                            child: Container(
+                              height: 100,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    image: AssetImage(
+                                      bottom,
+                                    ),
+                                  )),
+                            ),
                           ),
-                        ),
-                      )
-                    ],
-                  ),
-                ],
+                        )
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
             const SizedBox(
